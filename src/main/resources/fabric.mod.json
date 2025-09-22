@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "shinrabeyond",
+	"version": "${version}",
+	"name": "Shinra Beyond",
+	"description": "Shinra Beyond est un mod Minecraft qui introduit un système de potentiel unique par joueur, basé sur des statistiques initiales (mana, force, agilité...).\n\nChaque joueur progresse par un entraînement difficile, avec la possibilité de développer des compétences magiques, des arts de combat au katana et même la capacité d’arrêter le temps dans une zone définie.",
+	"authors": [
+		"Honyzey"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/shinrabeyond/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.honyzey.shinrabeyond.ShinraBeyond"
+		],
+        "client": [
+            "net.honyzey.shinrabeyond.ShinraBeyondClient"
+        ],
+		"fabric-datagen": [
+			"net.honyzey.shinrabeyond.ShinraBeyondDataGenerator"
+		]
+	},
+	"mixins": [
+		"shinrabeyond.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
