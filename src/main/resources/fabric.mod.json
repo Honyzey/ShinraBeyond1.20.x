@@ -23,7 +23,10 @@
         ],
 		"fabric-datagen": [
 			"net.honyzey.shinrabeyond.ShinraBeyondDataGenerator"
-		]
+		],
+        "cardinal-components": [
+          "net.honyzey.shinrabeyond.component.player.MyComponents"
+        ]
 	},
 	"mixins": [
 		"shinrabeyond.mixins.json"
@@ -36,5 +39,11 @@
 	},
 	"suggests": {
 		"another-mod": "*"
-	}
+	},
+
+    "custom": {
+        "cardinal-components": [
+            "shinrabeyond:player_stats"
+        ]
+    }
 }
