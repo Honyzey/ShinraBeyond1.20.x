@@ -24,6 +24,13 @@ public class PlayerStatsComponent implements PlayerStats, PlayerComponent<Player
         this.holder = holder;
     }
 
+    // Synchronise les stats avec le client si c'est un joueur serveur
+    public void sync() {
+        if (holder instanceof ServerPlayerEntity serverPlayer) {
+            MyPlayerComponents.PLAYER_STATS.sync(serverPlayer);
+        }
+    }
+
     // Génération des stats
     public void initIfNeeded() {
         if (!initialized && holder instanceof ServerPlayerEntity serverPlayer) {
@@ -39,7 +46,7 @@ public class PlayerStatsComponent implements PlayerStats, PlayerComponent<Player
                     serverPlayer.getGameProfile().getName(),mana, force
             );
 
-            MyPlayerComponents.PLAYER_STATS.sync(serverPlayer);
+            sync();
         }
 
     }
@@ -48,18 +55,29 @@ public class PlayerStatsComponent implements PlayerStats, PlayerComponent<Player
     @Override public int getMana() { return mana; }
     @Override public void setMana(int value) {
         mana = value;
-        if (holder instanceof ServerPlayerEntity serverPlayer) {
-            MyPlayerComponents.PLAYER_STATS.sync(serverPlayer);
-        }
+        sync();
     }
 
     @Override public int getForce() { return force; }
     @Override public void setForce(int value) {
         force = value;
-        if (holder instanceof ServerPlayerEntity serverPlayer) {
-            MyPlayerComponents.PLAYER_STATS.sync(serverPlayer);
-        }
+        sync();
     }
+
+    // Méthode utile
+    public void rerollStats() {
+        this.mana = random.nextInt(1000);
+        this.force = random.nextInt(1000);
+        this.initialized = true; // marque comme initialisé
+
+        ShinraBeyond.LOGGER.info(
+                "Stats REROLL pour {} : Mana={} | Force={}",
+                holder.getName().getString(), mana, force
+        );
+
+        sync();
+    }
+
 
     // Sauvegarde
     @Override

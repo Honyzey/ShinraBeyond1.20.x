@@ -12,4 +12,6 @@ public interface PlayerStats extends Component {
 
     void initIfNeeded();
 
+    void rerollStats();
+
 }

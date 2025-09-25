@@ -3,6 +3,7 @@ package net.honyzey.shinrabeyond;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.honyzey.shinrabeyond.commands.PlayerStatsCommands;
 import net.honyzey.shinrabeyond.component.player.MyPlayerComponents;
 import net.honyzey.shinrabeyond.component.player.PlayerStats;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -19,6 +20,9 @@ public class ShinraBeyond implements ModInitializer {
 	public void onInitialize() {
 
 		LOGGER.info("Shinra Beyond à bien été initialisé !");
+
+        // Enregistrement des commandes
+        PlayerStatsCommands.register();
 
         // Handler pour écouter quand un joueur ce connecte pour la première fois.
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {

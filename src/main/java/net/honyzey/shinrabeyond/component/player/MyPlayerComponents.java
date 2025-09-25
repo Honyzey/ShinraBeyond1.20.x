@@ -15,6 +15,6 @@ public class MyPlayerComponents implements EntityComponentInitializer {
     // Enregistrement de la "factory" (qui créer le composant pour chaque joueur"
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        registry.registerForPlayers(PLAYER_STATS, player -> new PlayerStatsComponent(player));
+        registry.registerForPlayers(PLAYER_STATS, PlayerStatsComponent::new);
     }
 }
