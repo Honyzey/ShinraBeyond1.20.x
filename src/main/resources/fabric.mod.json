@@ -25,7 +25,7 @@
 			"net.honyzey.shinrabeyond.ShinraBeyondDataGenerator"
 		],
         "cardinal-components": [
-          "net.honyzey.shinrabeyond.component.player.MyComponents"
+          "net.honyzey.shinrabeyond.component.player.MyPlayerComponents"
         ]
 	},
 	"mixins": [

@@ -10,4 +10,6 @@ public interface PlayerStats extends Component {
     int getForce();
     void setForce(int value);
 
+    void initIfNeeded();
+
 }

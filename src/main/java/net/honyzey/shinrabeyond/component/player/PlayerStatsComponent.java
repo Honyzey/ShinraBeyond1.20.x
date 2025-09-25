@@ -4,12 +4,14 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.honyzey.shinrabeyond.ShinraBeyond;
 
 import dev.onyxstudios.cca.api.v3.entity.PlayerComponent;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Random;
 
 public class PlayerStatsComponent implements PlayerStats, PlayerComponent<PlayerStatsComponent>, AutoSyncedComponent {
+    private final PlayerEntity holder;
 
     private int mana;
     private int force;
@@ -18,9 +20,13 @@ public class PlayerStatsComponent implements PlayerStats, PlayerComponent<Player
 
     private final Random random = new Random();
 
+    public PlayerStatsComponent(PlayerEntity holder) {
+        this.holder = holder;
+    }
+
     // Génération des stats
-    public void initIfNeeded(ServerPlayerEntity player) {
-        if (!initialized) {
+    public void initIfNeeded() {
+        if (!initialized && holder instanceof ServerPlayerEntity serverPlayer) {
 
             this.mana = random.nextInt(1000);
 
@@ -30,18 +36,30 @@ public class PlayerStatsComponent implements PlayerStats, PlayerComponent<Player
 
             ShinraBeyond.LOGGER.info(
                     "Stats INIT (SERVEUR) pour {} : Mana={} | Force={}",
-                    player.getGameProfile().getName(),mana, force
+                    serverPlayer.getGameProfile().getName(),mana, force
             );
+
+            MyPlayerComponents.PLAYER_STATS.sync(serverPlayer);
         }
 
     }
 
     // Getters Setters
     @Override public int getMana() { return mana; }
-    @Override public void setMana(int value) { mana = value; }
+    @Override public void setMana(int value) {
+        mana = value;
+        if (holder instanceof ServerPlayerEntity serverPlayer) {
+            MyPlayerComponents.PLAYER_STATS.sync(serverPlayer);
+        }
+    }
 
     @Override public int getForce() { return force; }
-    @Override public void setForce(int value) { force = value; }
+    @Override public void setForce(int value) {
+        force = value;
+        if (holder instanceof ServerPlayerEntity serverPlayer) {
+            MyPlayerComponents.PLAYER_STATS.sync(serverPlayer);
+        }
+    }
 
     // Sauvegarde
     @Override
