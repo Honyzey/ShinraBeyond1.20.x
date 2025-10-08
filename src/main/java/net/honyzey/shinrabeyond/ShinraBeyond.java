@@ -3,12 +3,16 @@ package net.honyzey.shinrabeyond;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.honyzey.shinrabeyond.commands.PlayerStatsCommands;
 import net.honyzey.shinrabeyond.component.player.MyPlayerComponents;
 import net.honyzey.shinrabeyond.component.player.PlayerStats;
+import net.honyzey.shinrabeyond.config.ConfigManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.file.Path;
 
 public class ShinraBeyond implements ModInitializer {
 
@@ -20,6 +24,14 @@ public class ShinraBeyond implements ModInitializer {
 	public void onInitialize() {
 
 		LOGGER.info("Shinra Beyond à bien été initialisé !");
+
+        Path configDir = FabricLoader.getInstance().getConfigDir();
+        ConfigManager.loadConfig(configDir);
+
+        LOGGER.info("ShinraBeyond config loaded: Limits={}, MaxStat={}",
+                ConfigManager.getConfig().useLimits,
+                ConfigManager.getConfig().maxStatValue
+        );
 
         // Enregistrement des commandes
         PlayerStatsCommands.register();
